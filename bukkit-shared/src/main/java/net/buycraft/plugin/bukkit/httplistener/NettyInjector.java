@@ -29,6 +29,15 @@ public abstract class NettyInjector {
         }
     }
 
+    // The temporary player factory
+    private List<Field> bootstrapFields = Lists.newArrayList();
+    private Map<Field, List<Object>> oldBootStrapFields = Maps.newHashMap();
+    // List of network managers
+    private Object serverConnection; // used for restore
+    private volatile List<Object> networkManagers;
+    private boolean injected;
+    private boolean closed;
+
     private static Integer getNmsVersion() {
         String packageName = Bukkit.getServer().getClass().getPackage().getName();
         String nmsVersion = packageName.substring(packageName.lastIndexOf(".") + 1);
@@ -41,16 +50,6 @@ public abstract class NettyInjector {
 
         return null;
     }
-
-    // The temporary player factory
-    private List<Field> bootstrapFields = Lists.newArrayList();
-    private Map<Field, List<Object>> oldBootStrapFields = Maps.newHashMap();
-
-    // List of network managers
-    private Object serverConnection; // used for restore
-    private volatile List<Object> networkManagers;
-    private boolean injected;
-    private boolean closed;
 
     /**
      * Inject into the spigot connection class.

@@ -47,6 +47,10 @@ public class BuycraftConfiguration {
         return properties.getProperty("server-key", null);
     }
 
+    public void setServerKey(String key) {
+        properties.setProperty("server-key", key);
+    }
+
     public boolean isPushCommandsEnabled() {
         return getBoolean("push-commands", false);
     }
@@ -57,10 +61,6 @@ public class BuycraftConfiguration {
             return null;
         }
         return Integer.valueOf(value);
-    }
-
-    public void setServerKey(String key) {
-        properties.setProperty("server-key", key);
     }
 
     public List<String> getBuyCommandName() {

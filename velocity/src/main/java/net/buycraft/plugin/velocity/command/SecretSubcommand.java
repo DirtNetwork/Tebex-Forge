@@ -8,7 +8,6 @@ import net.kyori.text.TextComponent;
 import net.kyori.text.format.TextColor;
 
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class SecretSubcommand implements Subcommand {
     private final BuycraftPlugin plugin;

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>BuycraftX</artifactId>
-        <groupId>net.buycraft</groupId>
-        <version>12.0.8</version>
+        <artifactId>Tebex</artifactId>
+        <groupId>net.tebex</groupId>
+        <version>12.0.9</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>buycraftx-bukkit-shared</artifactId>
+    <artifactId>tebex-bukkit-shared</artifactId>
 
     <dependencies>
         <dependency>
@@ -18,10 +18,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.buycraft</groupId>
-            <artifactId>buycraftx-plugin-shared</artifactId>
+            <groupId>net.tebex</groupId>
+            <artifactId>tebex-plugin-shared</artifactId>
             <version>${project.parent.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>

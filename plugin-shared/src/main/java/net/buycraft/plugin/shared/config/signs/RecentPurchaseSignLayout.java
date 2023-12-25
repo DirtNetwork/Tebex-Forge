@@ -1,6 +1,5 @@
 package net.buycraft.plugin.shared.config.signs;
 
-import com.google.common.collect.ImmutableList;
 import net.buycraft.plugin.data.RecentPayment;
 
 import java.text.NumberFormat;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class RecentPurchaseSignLayout {
-    public static final RecentPurchaseSignLayout DEFAULT = new RecentPurchaseSignLayout(ImmutableList.of(
+    public static final RecentPurchaseSignLayout DEFAULT = new RecentPurchaseSignLayout(List.of(
             "",
             "%player%",
             "%amount%"
@@ -18,7 +17,7 @@ public class RecentPurchaseSignLayout {
     private final List<String> lines;
 
     public RecentPurchaseSignLayout(List<String> lines) {
-        this.lines = ImmutableList.copyOf(lines);
+        this.lines = List.copyOf(lines);
     }
 
     public List<String> format(RecentPayment p) {

@@ -1,7 +1,6 @@
 package net.buycraft.plugin.shared.config.signs;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
 import net.buycraft.plugin.data.Package;
 
 import java.text.NumberFormat;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class BuyNowSignLayout {
-    public static final BuyNowSignLayout DEFAULT = new BuyNowSignLayout(ImmutableList.of(
+    public static final BuyNowSignLayout DEFAULT = new BuyNowSignLayout(List.of(
             "&9[Package]",
             "%name%",
             "%price%"
@@ -19,7 +18,13 @@ public class BuyNowSignLayout {
     private final List<String> lines;
 
     public BuyNowSignLayout(List<String> lines) {
-        this.lines = ImmutableList.copyOf(lines);
+        this.lines = List.copyOf(lines);
+    }
+
+    private static String abbreviate(String string, int maximumLength) {
+        Preconditions.checkNotNull(string, "string");
+        Preconditions.checkArgument(maximumLength > 0, "length to trim to (%s) is not valid (greater than 0)", maximumLength);
+        return string.length() > maximumLength ? string.substring(0, maximumLength - 3) + "..." : string;
     }
 
     public List<String> format(Currency currency, Package p) {
@@ -32,11 +37,5 @@ public class BuyNowSignLayout {
                     .replace("%price%", format.format(p.getEffectivePrice())));
         }
         return formatted;
-    }
-
-    private static String abbreviate(String string, int maximumLength) {
-        Preconditions.checkNotNull(string, "string");
-        Preconditions.checkArgument(maximumLength > 0, "length to trim to (%s) is not valid (greater than 0)", maximumLength);
-        return string.length() > maximumLength ? string.substring(0, maximumLength - 3) + "..." : string;
     }
 }

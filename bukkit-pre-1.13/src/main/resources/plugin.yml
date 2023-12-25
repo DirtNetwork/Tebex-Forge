@@ -4,5 +4,5 @@ version: ${project.version}
 author: Buycraft
 commands:
   tebex:
-    aliases: [buycraft]
+    aliases: [ buycraft ]
     description: Main command for the Tebex plugin.

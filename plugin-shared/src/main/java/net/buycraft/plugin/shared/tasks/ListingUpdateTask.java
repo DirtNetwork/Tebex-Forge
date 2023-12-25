@@ -29,7 +29,9 @@ public class ListingUpdateTask implements Runnable {
         }
 
         try {
+
             listing.set(platform.getApiClient().retrieveListing().execute().body());
+
         } catch (IOException e) {
             platform.log(Level.SEVERE, "Error whilst retrieving listing", e);
             return;

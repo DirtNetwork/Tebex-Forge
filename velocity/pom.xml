@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>BuycraftX</artifactId>
-        <groupId>net.buycraft</groupId>
-        <version>12.0.8</version>
+        <artifactId>Tebex</artifactId>
+        <groupId>net.tebex</groupId>
+        <version>12.0.9</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>buycraftx-velocity</artifactId>
+    <artifactId>tebex-velocity</artifactId>
 
 
     <repositories>
@@ -30,26 +30,27 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.5.0</version>
                 <configuration>
                     <artifactSet>
                         <excludes>
                             <exclude>com.google.code.gson</exclude>
                             <exclude>com.google.guava</exclude>
+                            <exclude>org.slf4j</exclude>
                         </excludes>
                     </artifactSet>
                     <relocations>
                         <relocation>
                             <pattern>okhttp3</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.okhttp3</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.okhttp3</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>okio</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.okio</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.okio</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>com.fasterxml.jackson</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.jackson</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.jackson</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -90,8 +91,8 @@
                 </executions>
                 <dependencies>
                     <dependency>
-                        <groupId>net.buycraft</groupId>
-                        <artifactId>buycraftx-velocity</artifactId>
+                        <groupId>net.tebex</groupId>
+                        <artifactId>tebex-velocity</artifactId>
                         <version>${project.version}</version>
                     </dependency>
                 </dependencies>
@@ -119,8 +120,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>net.buycraft</groupId>
-            <artifactId>buycraftx-plugin-shared</artifactId>
+            <groupId>net.tebex</groupId>
+            <artifactId>tebex-plugin-shared</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>

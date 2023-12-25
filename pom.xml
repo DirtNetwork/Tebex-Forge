@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.buycraft</groupId>
-    <artifactId>BuycraftX</artifactId>
+    <groupId>net.tebex</groupId>
+    <artifactId>Tebex</artifactId>
     <packaging>pom</packaging>
-    <version>12.0.8</version>
+    <version>12.0.9</version>
     <modules>
-        <module>common</module>
-        <module>bukkit-shared</module>
-        <module>bukkit-pre-1.13</module>
         <module>bukkit-post-1.13</module>
-        <module>sponge</module>
+        <module>bukkit-pre-1.13</module>
+        <module>bukkit-shared</module>
         <module>bungeecord</module>
-        <module>plugin-shared</module>
+        <module>common</module>
+        <module>forge</module>
         <module>nukkit</module>
+        <module>plugin-shared</module>
+        <module>sponge</module>
         <module>velocity</module>
     </modules>
 

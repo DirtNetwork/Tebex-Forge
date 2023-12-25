@@ -1,27 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>BuycraftX</artifactId>
-        <groupId>net.buycraft</groupId>
-        <version>12.0.8</version>
+        <artifactId>Tebex</artifactId>
+        <groupId>net.tebex</groupId>
+        <version>12.0.9</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>buycraftx-plugin-shared</artifactId>
-
+    <artifactId>tebex-plugin-shared</artifactId>
     <dependencies>
         <dependency>
-            <groupId>net.buycraft</groupId>
-            <artifactId>buycraftx-common</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>compile</scope>
+            <groupId>net.tebex</groupId>
+            <artifactId>tebex-common</artifactId>
+            <version>12.0.9</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.1-jre</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.14.9</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.retrofit2</groupId>
+            <artifactId>retrofit</artifactId>
+            <version>2.9.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

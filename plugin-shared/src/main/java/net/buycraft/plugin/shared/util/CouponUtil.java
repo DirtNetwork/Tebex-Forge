@@ -1,13 +1,9 @@
 package net.buycraft.plugin.shared.util;
 
-import com.google.common.collect.ImmutableList;
 import net.buycraft.plugin.data.Coupon;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class CouponUtil {
@@ -34,7 +30,7 @@ public class CouponUtil {
                         result += TimeUnit.DAYS.toMillis(n);
                         break;
                     case 'w':
-                        result += TimeUnit.DAYS.toMillis(n * 7);
+                        result += TimeUnit.DAYS.toMillis(n * 7L);
                         break;
                     case 'h':
                         result += TimeUnit.HOURS.toMillis(n);
@@ -74,7 +70,7 @@ public class CouponUtil {
 
         Coupon.Builder builder = Coupon.builder()
                 .code(generateCode())
-                .effective(new Coupon.Effective("cart", ImmutableList.of(), ImmutableList.of()))
+                .effective(new Coupon.Effective("cart", List.of(), List.of()))
                 .basketType("both")
                 .startDate(new Date());
 

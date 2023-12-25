@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>BuycraftX</artifactId>
-        <groupId>net.buycraft</groupId>
-        <version>12.0.8</version>
+        <artifactId>Tebex</artifactId>
+        <groupId>net.tebex</groupId>
+        <version>12.0.9</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>buycraftx-bukkit-pre-1.13</artifactId>
+    <artifactId>tebex-bukkit-pre-1.13</artifactId>
     <build>
         <resources>
             <resource>
@@ -20,37 +20,39 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.5.0</version>
                 <configuration>
                     <artifactSet>
                         <excludes>
+                            <exclude>com.google.code.gson</exclude>
                             <exclude>com.google.guava</exclude>
+                            <exclude>org.slf4j</exclude>
                         </excludes>
                     </artifactSet>
                     <relocations>
                         <relocation>
                             <pattern>com.google.gson</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.gson</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.gson</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>okhttp3</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.okhttp3</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.okhttp3</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>okio</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.okio</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.okio</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>retrofit2</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.retrofit2</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.retrofit2</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>com.fasterxml.jackson</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.jackson</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.jackson</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.slf4j</pattern>
-                            <shadedPattern>net.buycraft.plugin.internal.slf4j</shadedPattern>
+                            <shadedPattern>net.tebex.plugin.internal.slf4j</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -65,7 +67,6 @@
             </plugin>
         </plugins>
     </build>
-
     <dependencies>
         <dependency>
             <groupId>org.bukkit</groupId>
@@ -74,8 +75,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.buycraft</groupId>
-            <artifactId>buycraftx-bukkit-shared</artifactId>
+            <groupId>net.tebex</groupId>
+            <artifactId>tebex-bukkit-shared</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>

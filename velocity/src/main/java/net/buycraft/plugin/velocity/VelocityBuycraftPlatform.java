@@ -21,13 +21,12 @@ import java.util.logging.Level;
 
 public class VelocityBuycraftPlatform implements IBuycraftPlatform {
 
+    private final BuycraftPlugin plugin;
     private Map<Level, Function<Logger, BiConsumer<String, Throwable>>> LOG_LEVEL_MAP = new HashMap<Level, Function<Logger, BiConsumer<String, Throwable>>>() {{
         put(Level.INFO, l -> l::info);
         put(Level.WARNING, l -> l::warn);
         put(Level.SEVERE, l -> l::error);
     }};
-
-    private final BuycraftPlugin plugin;
 
     public VelocityBuycraftPlatform(BuycraftPlugin plugin) {
         this.plugin = plugin;

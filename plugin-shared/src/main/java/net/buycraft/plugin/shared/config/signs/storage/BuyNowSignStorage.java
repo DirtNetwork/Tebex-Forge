@@ -1,6 +1,5 @@
 package net.buycraft.plugin.shared.config.signs.storage;
 
-import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -38,7 +37,7 @@ public class BuyNowSignStorage {
     }
 
     public List<SavedBuyNowSign> getSigns() {
-        return ImmutableList.copyOf(signs);
+        return List.copyOf(signs);
     }
 
     public boolean containsLocation(SerializedBlockLocation location) {

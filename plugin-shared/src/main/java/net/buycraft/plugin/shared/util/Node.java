@@ -12,10 +12,10 @@ import java.util.Optional;
  * This was created with the intention of allowing traversal
  */
 public class Node {
-    private List<Category> subcategories;
-    private List<Package> packages;
-    private String title;
-    private Node parent;
+    private final List<Category> subcategories;
+    private final List<Package> packages;
+    private final String title;
+    private final Node parent;
 
     public Node(List<Category> subcategories, List<Package> packages, String title, Node parent) {
         this.subcategories = subcategories;

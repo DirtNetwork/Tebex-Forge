@@ -15,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
-import java.awt.*;
 import java.util.Arrays;
 
 public class RecentPurchaseSignListener implements Listener {

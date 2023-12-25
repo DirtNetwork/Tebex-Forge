@@ -27,7 +27,7 @@ public class ServerEventSenderTask implements Runnable {
             return;
         }
 
-        if(platform.getServerInformation() == null || !platform.getServerInformation().getAccount().isLogEvents()) {
+        if (platform.getServerInformation() == null || !platform.getServerInformation().getAccount().isLogEvents()) {
             return;
         }
 
