@@ -13,7 +13,6 @@
         <module>bukkit-shared</module>
         <module>bungeecord</module>
         <module>common</module>
-        <module>forge</module>
         <module>nukkit</module>
         <module>plugin-shared</module>
         <module>sponge</module>
