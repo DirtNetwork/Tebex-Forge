@@ -61,7 +61,7 @@ import java.util.stream.Collectors;
 @Mod("forgedtebex")
 public class ForgedTebex {
 
-    private static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger("Tebex");
+    private static final Logger LOGGER = LogManager.getLogger("Tebex");
 
     private final String pluginVersion;
 
@@ -102,14 +102,14 @@ public class ForgedTebex {
     }
 
     @SubscribeEvent
-    public static void onCommandRegister(RegisterCommandsEvent event) {
+    public void onCommandRegister(RegisterCommandsEvent event) {
         //region Commands
         event.getDispatcher().register(configureCommand(Commands.literal("tebex")));
         event.getDispatcher().register(configureCommand(Commands.literal("buycraft")));
 
         if (!configuration.isDisableBuyCommand()) {
             configuration.getBuyCommandName().forEach(cmd ->
-                    event.getDispatcher().register(Commands.literal(cmd).executes(new BuyCommand(plugin))));
+                    event.getDispatcher().register(Commands.literal(cmd).executes(new BuyCommand(this))));
         }
         //endregion
 
@@ -119,9 +119,7 @@ public class ForgedTebex {
     @SubscribeEvent
     public void onServerStarting(ServerStartedEvent event) {
         MinecraftServer minecraftServer = event.getServer();
-        if (minecraftServer != null) {
-            boolean isDedicatedServer = minecraftServer.isDedicatedServer();
-            if (isDedicatedServer) {
+        if (minecraftServer.isDedicatedServer()) {
                 server = event.getServer();
                 executor = Executors.newScheduledThreadPool(2, r -> new Thread(r, "Buycraft Scheduler Thread"));
 
@@ -196,11 +194,10 @@ public class ForgedTebex {
                             })
                             .build());
                 }
-            }
         }
     }
 
-    private static LiteralArgumentBuilder<CommandSourceStack> configureCommand(LiteralArgumentBuilder<CommandSourceStack> command) {
+    private LiteralArgumentBuilder<CommandSourceStack> configureCommand(LiteralArgumentBuilder<CommandSourceStack> command) {
         CouponCmd couponCmd = new CouponCmd(plugin);
         return command
                 /*.requires(player -> {
@@ -215,11 +212,11 @@ public class ForgedTebex {
                                 .then(Commands.argument("data", StringArgumentType.greedyString()).executes(couponCmd::create)))
                         .then(Commands.literal("delete")
                                 .then(Commands.argument("code", StringArgumentType.word()).executes(couponCmd::delete))))
-                .then(Commands.literal("forcecheck").executes(new ForceCheckCmd(plugin)))
-                .then(Commands.literal("info").executes(new InfoCmd(plugin)))
-                .then(Commands.literal("report").executes(new ReportCmd(plugin)))
+                .then(Commands.literal("forcecheck").executes(new ForceCheckCmd(this)))
+                .then(Commands.literal("info").executes(new InfoCmd(this)))
+                .then(Commands.literal("report").executes(new ReportCmd(this)))
                 .then(Commands.literal("secret")
-                        .then(Commands.argument("secret", StringArgumentType.word()).executes(new SecretCmd(plugin))));
+                        .then(Commands.argument("secret", StringArgumentType.word()).executes(new SecretCmd(this))));
     }
 
     @SubscribeEvent
