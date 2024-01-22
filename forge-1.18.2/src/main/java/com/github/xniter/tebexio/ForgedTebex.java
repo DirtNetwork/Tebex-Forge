@@ -117,7 +117,7 @@ public class ForgedTebex {
 
     // As close to an onEnable as we are ever going to get :(
     @SubscribeEvent
-    public void onServerStarting(ServerStartedEvent event) {
+    public void onServerStarting(ServerStartingEvent event) {
         MinecraftServer minecraftServer = event.getServer();
         if (minecraftServer.isDedicatedServer()) {
                 server = event.getServer();
