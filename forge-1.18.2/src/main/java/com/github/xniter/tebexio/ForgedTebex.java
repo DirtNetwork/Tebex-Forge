@@ -6,6 +6,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.logging.LogUtils;
 import net.buycraft.plugin.BuyCraftAPI;
+import net.buycraft.plugin.BuyCraftAPIException;
 import net.buycraft.plugin.IBuycraftPlatform;
 import net.buycraft.plugin.data.QueuedPlayer;
 import net.buycraft.plugin.data.responses.ServerInformation;
@@ -158,18 +159,27 @@ public class ForgedTebex {
                 }
 
                 String serverKey = configuration.getServerKey();
-                if (serverKey == null || serverKey.equals("INVALID")) {
-                    getLogger().info("Looks like this is a fresh setup. Get started by using 'buycraft secret <key>' in the console.");
-                } else {
-                    getLogger().info("Validating your server key...");
-                    BuyCraftAPI client = BuyCraftAPI.create(configuration.getServerKey(), httpClient);
-                    try {
-                        updateInformation(client);
-                    } catch (IOException e) {
+            if (serverKey == null || serverKey.equals("INVALID")) {
+                getLogger().info("Looks like this is a fresh setup. Get started by using 'buycraft secret <key>' in the console.");
+            } else {
+                getLogger().info("Validating your server key...");
+                BuyCraftAPI client = BuyCraftAPI.create(configuration.getServerKey(), httpClient);
+                try {
+                    updateInformation(client);
+                } catch (Exception e) {
+                    if (e instanceof IOException) {
+                        // Handle IOException
                         getLogger().error(String.format("We can't check if your server can connect to Buycraft: %s", e.getMessage()));
+                    } else if (e instanceof BuyCraftAPIException) {
+                        // Handle BuycraftAPIException
+                        getLogger().error(String.format("The Tebex server key seems to be invalid, perhaps you used a wrong key or you have sense removed the server in Tebex, please see error message->: %s", e.getMessage()));
+                    } else {
+                        // Handle other types of exceptions
+                        getLogger().error(String.format("Unexpected exception while updating Tebex server information: %s", e.getMessage()));
                     }
-                    apiClient = client;
                 }
+                apiClient = client;
+            }
 
                 placeholderManager.addPlaceholder(new NamePlaceholder());
                 placeholderManager.addPlaceholder(new UuidPlaceholder());
