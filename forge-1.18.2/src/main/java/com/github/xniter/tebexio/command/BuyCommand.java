@@ -1,6 +1,6 @@
 package com.github.xniter.tebexio.command;
 
-import com.github.xniter.tebexio.ForgedTebex;
+import com.github.xniter.tebexio.TebexForged;
 import com.github.xniter.tebexio.util.CmdUtil;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
@@ -12,9 +12,9 @@ import net.minecraft.network.chat.TextComponent;
 
 public class BuyCommand implements Command<CommandSourceStack> {
 
-    private final ForgedTebex plugin;
+    private final TebexForged plugin;
 
-    public BuyCommand(ForgedTebex plugin) {
+    public BuyCommand(TebexForged plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package com.github.xniter.tebexio.command;
 
-import com.github.xniter.tebexio.ForgedTebex;
+import com.github.xniter.tebexio.TebexForged;
 import com.github.xniter.tebexio.util.CmdUtil;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
@@ -12,9 +12,9 @@ import net.minecraft.network.chat.TextComponent;
 import java.io.IOException;
 
 public class CouponCmd {
-    private final ForgedTebex plugin;
+    private final TebexForged plugin;
 
-    public CouponCmd(final ForgedTebex plugin) {
+    public CouponCmd(final TebexForged plugin) {
         this.plugin = plugin;
     }
 

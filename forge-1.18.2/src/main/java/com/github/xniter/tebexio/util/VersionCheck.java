@@ -1,7 +1,7 @@
 package com.github.xniter.tebexio.util;
 
 
-import com.github.xniter.tebexio.ForgedTebex;
+import com.github.xniter.tebexio.TebexForged;
 import com.github.xniter.tebexio.command.ForgeMessageUtil;
 import net.buycraft.plugin.data.responses.Version;
 import net.buycraft.plugin.shared.util.VersionUtil;
@@ -16,13 +16,13 @@ import java.util.concurrent.TimeUnit;
 import static net.buycraft.plugin.shared.util.VersionUtil.isVersionGreater;
 
 public class VersionCheck {
-    private final ForgedTebex plugin;
+    private final TebexForged plugin;
     private final String pluginVersion;
     private final String secret;
     private Version lastKnownVersion;
     private boolean upToDate = true;
 
-    public VersionCheck(final ForgedTebex plugin, final String pluginVersion, final String secret) {
+    public VersionCheck(final TebexForged plugin, final String pluginVersion, final String secret) {
         this.plugin = plugin;
         this.pluginVersion = pluginVersion;
         this.secret = secret;

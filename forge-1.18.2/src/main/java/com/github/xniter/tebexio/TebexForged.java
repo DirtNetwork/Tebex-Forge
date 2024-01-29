@@ -4,7 +4,6 @@ import com.github.xniter.tebexio.command.*;
 import com.github.xniter.tebexio.util.VersionCheck;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.logging.LogUtils;
 import net.buycraft.plugin.BuyCraftAPI;
 import net.buycraft.plugin.BuyCraftAPIException;
 import net.buycraft.plugin.IBuycraftPlatform;
@@ -24,24 +23,15 @@ import net.buycraft.plugin.shared.util.AnalyticsSend;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import okhttp3.OkHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -56,11 +46,10 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod("forgedtebex")
-public class ForgedTebex {
+@Mod("tebexforged")
+public class TebexForged {
 
     private static final Logger LOGGER = LogManager.getLogger("Tebex");
 
@@ -85,11 +74,11 @@ public class ForgedTebex {
     private PostCompletedCommandsTask completedCommandsTask;
     private PlayerJoinCheckTask playerJoinCheckTask;
 
-    private static ForgedTebex plugin;
+    private static TebexForged plugin;
 
     private boolean stopped = false;
 
-    public ForgedTebex() {
+    public TebexForged() {
         pluginVersion = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
         MinecraftForge.EVENT_BUS.register(this);
     }

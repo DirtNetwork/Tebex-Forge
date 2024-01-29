@@ -33,9 +33,9 @@ public class ForgeBuycraftPlatform implements IBuycraftPlatform {
         put(Level.ALL, org.apache.logging.log4j.Level.ALL);
     }};
 
-    private final ForgedTebex plugin;
+    private final TebexForged plugin;
 
-    public ForgeBuycraftPlatform(ForgedTebex plugin) {
+    public ForgeBuycraftPlatform(TebexForged plugin) {
         this.plugin = plugin;
     }
 

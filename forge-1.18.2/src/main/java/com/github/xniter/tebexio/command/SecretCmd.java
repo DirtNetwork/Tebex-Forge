@@ -1,6 +1,6 @@
 package com.github.xniter.tebexio.command;
 
-import com.github.xniter.tebexio.ForgedTebex;
+import com.github.xniter.tebexio.TebexForged;
 import com.github.xniter.tebexio.util.CmdUtil;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -14,9 +14,9 @@ import net.minecraft.network.chat.TextComponent;
 import java.io.IOException;
 
 public class SecretCmd implements Command<CommandSourceStack> {
-    private final ForgedTebex plugin;
+    private final TebexForged plugin;
 
-    public SecretCmd(final ForgedTebex plugin) {
+    public SecretCmd(final TebexForged plugin) {
         this.plugin = plugin;
     }
 
