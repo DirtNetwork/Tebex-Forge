@@ -70,7 +70,7 @@ public class CouponUtil {
 
         Coupon.Builder builder = Coupon.builder()
                 .code(generateCode())
-                .effective(new Coupon.Effective("cart", List.of(), List.of()))
+                .effective(new Coupon.Effective("cart", new ArrayList<>(), Arrays.asList()))
                 .basketType("both")
                 .startDate(new Date());
 

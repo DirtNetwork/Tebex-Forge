@@ -3,21 +3,20 @@ package net.buycraft.plugin.shared.config.signs;
 import net.buycraft.plugin.data.RecentPayment;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class RecentPurchaseSignLayout {
-    public static final RecentPurchaseSignLayout DEFAULT = new RecentPurchaseSignLayout(List.of(
-            "",
-            "%player%",
-            "%amount%"
-    ));
+    public static final RecentPurchaseSignLayout DEFAULT = new RecentPurchaseSignLayout(
+            new ArrayList<>(Arrays.asList(
+                    "",
+                    "%player%",
+                    "%amount%"
+            ))
+    );
     private final List<String> lines;
 
     public RecentPurchaseSignLayout(List<String> lines) {
-        this.lines = List.copyOf(lines);
+        this.lines = Collections.unmodifiableList(lines);
     }
 
     public List<String> format(RecentPayment p) {

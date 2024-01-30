@@ -4,21 +4,20 @@ import com.google.common.base.Preconditions;
 import net.buycraft.plugin.data.Package;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class BuyNowSignLayout {
-    public static final BuyNowSignLayout DEFAULT = new BuyNowSignLayout(List.of(
-            "&9[Package]",
-            "%name%",
-            "%price%"
-    ));
+    public static final BuyNowSignLayout DEFAULT = new BuyNowSignLayout(
+            new ArrayList<>(Arrays.asList(
+                    "&9[Package]",
+                    "%name%",
+                    "%price%"
+            ))
+    );
     private final List<String> lines;
 
     public BuyNowSignLayout(List<String> lines) {
-        this.lines = List.copyOf(lines);
+        this.lines = Collections.unmodifiableList(lines);
     }
 
     private static String abbreviate(String string, int maximumLength) {

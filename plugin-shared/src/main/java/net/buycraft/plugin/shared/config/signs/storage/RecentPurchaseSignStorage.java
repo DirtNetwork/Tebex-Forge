@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class RecentPurchaseSignStorage {
     }
 
     public List<RecentPurchaseSignPosition> getSigns() {
-        return List.copyOf(signs);
+        return Arrays.asList(signs.toArray(new RecentPurchaseSignPosition[0]));
     }
 
     public boolean containsLocation(SerializedBlockLocation location) {

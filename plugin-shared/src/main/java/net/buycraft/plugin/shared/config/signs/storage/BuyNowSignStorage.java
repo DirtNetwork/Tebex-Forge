@@ -9,9 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class BuyNowSignStorage {
     private final List<SavedBuyNowSign> signs = new ArrayList<>();
@@ -37,7 +35,7 @@ public class BuyNowSignStorage {
     }
 
     public List<SavedBuyNowSign> getSigns() {
-        return List.copyOf(signs);
+        return Collections.unmodifiableList(Arrays.asList(signs.toArray(new SavedBuyNowSign[0])));
     }
 
     public boolean containsLocation(SerializedBlockLocation location) {
