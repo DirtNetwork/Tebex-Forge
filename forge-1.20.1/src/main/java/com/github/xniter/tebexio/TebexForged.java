@@ -1,7 +1,6 @@
 package com.github.xniter.tebexio;
 
 import com.github.xniter.tebexio.command.*;
-import com.github.xniter.tebexio.util.VersionCheck;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import net.buycraft.plugin.BuyCraftAPI;
@@ -137,16 +136,6 @@ public class TebexForged {
                 getLogger().warn("Forcing english translations while we wait on a forge bugfix!");
                 httpClient = Setup.okhttp(baseDirectory.resolve("cache").toFile());
 
-                if (configuration.isCheckForUpdates()) {
-                    VersionCheck check = new VersionCheck(this, pluginVersion, configuration.getServerKey());
-                    try {
-                        check.verify();
-                    } catch (IOException e) {
-                        getLogger().error("Can't check for updates", e);
-                    }
-                    MinecraftForge.EVENT_BUS.register(check);
-                }
-
                 String serverKey = configuration.getServerKey();
             if (serverKey == null || serverKey.equals("INVALID")) {
                 getLogger().info("Looks like this is a fresh setup. Get started by using 'buycraft secret <key>' in the console.");
@@ -220,20 +209,18 @@ public class TebexForged {
 
     @SubscribeEvent
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        if (event.getPlayer().getServer() != null && event.getPlayer().getServer().isDedicatedServer()) {
+        if (event.getEntity().getServer() != null && event.getEntity().getServer().isDedicatedServer()) {
             if (apiClient == null) {
                 return;
             }
 
-            QueuedPlayer qp = duePlayerFetcher.fetchAndRemoveDuePlayer(event.getPlayer().getName().getString());
+            QueuedPlayer qp = duePlayerFetcher.fetchAndRemoveDuePlayer(event.getEntity().getName().getString());
             if (qp != null) {
                 playerJoinCheckTask.queue(qp);
             }
         }
     }
 
-    // I hate that forge after all these years still hasn't given us a nice scheduler. So here's my poor attempt at
-    // DIYing one similar to how bukkits one works, with a nice builder thrown on top.
     @SubscribeEvent
     public void onTick(TickEvent.ServerTickEvent event) {
         if (!stopped && server != null && server.isDedicatedServer() && event.phase == TickEvent.Phase.END) {

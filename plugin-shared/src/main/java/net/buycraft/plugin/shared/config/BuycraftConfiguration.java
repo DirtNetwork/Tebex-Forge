@@ -89,10 +89,6 @@ public class BuycraftConfiguration {
         return getBoolean("is-bungeecord", false);
     }
 
-    public boolean isCheckForUpdates() {
-        return getBoolean("check-for-updates", true);
-    }
-
     public boolean isDisableBuyCommand() {
         return getBoolean("disable-buy-command", false);
     }
@@ -112,7 +108,6 @@ public class BuycraftConfiguration {
     public void fillDefaults() {
         defaultSet("server-key", "INVALID");
         defaultSet("is-bungeecord", "false");
-        defaultSet("check-for-updates", "true");
         defaultSet("disable-buy-command", "false");
         defaultSet("buy-command-name", "buy");
         defaultSet("language", Locale.getDefault().toLanguageTag());
