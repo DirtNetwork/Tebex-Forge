@@ -20,7 +20,7 @@ public class BuyCommand implements Command<CommandSourceStack> {
 
     @Override
     public int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
-        if(plugin.getServerInformation() == null) {
+        if (plugin.getServerInformation() == null) {
             ForgeMessageUtil.sendMessage(context.getSource(), Component.translatable(ForgeMessageUtil.format("information_no_server"))
                     .setStyle(CmdUtil.ERROR_STYLE));
             return 1;

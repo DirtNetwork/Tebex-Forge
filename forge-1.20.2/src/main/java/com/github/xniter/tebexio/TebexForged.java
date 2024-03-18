@@ -26,11 +26,11 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import okhttp3.OkHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -51,18 +51,14 @@ import java.util.logging.Level;
 public class TebexForged {
 
     private static final Logger LOGGER = LogManager.getLogger("Tebex");
-
-    private final String pluginVersion;
-
-    private final PlaceholderManager placeholderManager = new PlaceholderManager();
     private static final BuycraftConfiguration configuration = new BuycraftConfiguration();
-    private final Path baseDirectory = Paths.get("config", "buycraft");
-
-    private final List<ForgeScheduledTask> scheduledTasks = new ArrayList<>();
-
-    private MinecraftServer server;
     private static ScheduledExecutorService executor;
-
+    private static TebexForged plugin;
+    private final String pluginVersion;
+    private final PlaceholderManager placeholderManager = new PlaceholderManager();
+    private final Path baseDirectory = Paths.get("config", "buycraft");
+    private final List<ForgeScheduledTask> scheduledTasks = new ArrayList<>();
+    private MinecraftServer server;
     private BuyCraftAPI apiClient;
     private DuePlayerFetcher duePlayerFetcher;
     private ServerInformation serverInformation;
@@ -72,22 +68,11 @@ public class TebexForged {
     //private BuycraftI18n i18n;
     private PostCompletedCommandsTask completedCommandsTask;
     private PlayerJoinCheckTask playerJoinCheckTask;
-
-    private static TebexForged plugin;
-
     private boolean stopped = false;
 
     public TebexForged() {
         pluginVersion = ModLoadingContext.get().getActiveContainer().getModInfo().getVersion().toString();
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    public static class Debug implements Predicate<RunnableScheduledFuture<?>> {
-
-        @Override
-        public boolean test(RunnableScheduledFuture<?> runnableScheduledFuture) {
-            return !runnableScheduledFuture.isPeriodic();
-        }
     }
 
     @SubscribeEvent
@@ -109,34 +94,34 @@ public class TebexForged {
     public void onServerStarting(ServerStartingEvent event) {
         MinecraftServer minecraftServer = event.getServer();
         if (minecraftServer.isDedicatedServer()) {
-                server = event.getServer();
-                executor = Executors.newScheduledThreadPool(2, r -> new Thread(r, "Buycraft Scheduler Thread"));
+            server = event.getServer();
+            executor = Executors.newScheduledThreadPool(2, r -> new Thread(r, "Buycraft Scheduler Thread"));
 
-                platform = new ForgeBuycraftPlatform(this);
+            platform = new ForgeBuycraftPlatform(this);
 
+            try {
                 try {
-                    try {
-                        Files.createDirectory(baseDirectory);
-                    } catch (FileAlreadyExistsException ignored) {
-                    }
-                    Path configPath = baseDirectory.resolve("config.properties");
-                    try {
-                        configuration.load(configPath);
-                    } catch (NoSuchFileException e) {
-                        // Save defaults
-                        configuration.fillDefaults();
-                        configuration.save(configPath);
-                    }
-                } catch (IOException e) {
-                    getLogger().error("Unable to load configuration! The plugin will disable itself now.", e);
-                    return;
+                    Files.createDirectory(baseDirectory);
+                } catch (FileAlreadyExistsException ignored) {
                 }
+                Path configPath = baseDirectory.resolve("config.properties");
+                try {
+                    configuration.load(configPath);
+                } catch (NoSuchFileException e) {
+                    // Save defaults
+                    configuration.fillDefaults();
+                    configuration.save(configPath);
+                }
+            } catch (IOException e) {
+                getLogger().error("Unable to load configuration! The plugin will disable itself now.", e);
+                return;
+            }
 
-                //i18n = configuration.createI18n();
-                getLogger().warn("Forcing english translations while we wait on a forge bugfix!");
-                httpClient = Setup.okhttp(baseDirectory.resolve("cache").toFile());
+            //i18n = configuration.createI18n();
+            getLogger().warn("Forcing english translations while we wait on a forge bugfix!");
+            httpClient = Setup.okhttp(baseDirectory.resolve("cache").toFile());
 
-                String serverKey = configuration.getServerKey();
+            String serverKey = configuration.getServerKey();
             if (serverKey == null || serverKey.equals("INVALID")) {
                 getLogger().info("Looks like this is a fresh setup. Get started by using 'buycraft secret <key>' in the console.");
             } else {
@@ -159,29 +144,29 @@ public class TebexForged {
                 apiClient = client;
             }
 
-                placeholderManager.addPlaceholder(new NamePlaceholder());
-                placeholderManager.addPlaceholder(new UuidPlaceholder());
-                platform.executeAsyncLater(duePlayerFetcher = new DuePlayerFetcher(platform, configuration.isVerbose()), 1, TimeUnit.SECONDS);
-                completedCommandsTask = new PostCompletedCommandsTask(platform);
-                commandExecutor = new QueuedCommandExecutor(platform, completedCommandsTask);
-                scheduledTasks.add(ForgeScheduledTask.Builder.create().withInterval(1).withDelay(1).withTask((Runnable) commandExecutor).build());
-                scheduledTasks.add(ForgeScheduledTask.Builder.create().withAsync(true).withInterval(20).withDelay(20).withTask(completedCommandsTask).build());
-                playerJoinCheckTask = new PlayerJoinCheckTask(platform);
-                scheduledTasks.add(ForgeScheduledTask.Builder.create().withInterval(20).withDelay(20).withTask(playerJoinCheckTask).build());
+            placeholderManager.addPlaceholder(new NamePlaceholder());
+            placeholderManager.addPlaceholder(new UuidPlaceholder());
+            platform.executeAsyncLater(duePlayerFetcher = new DuePlayerFetcher(platform, configuration.isVerbose()), 1, TimeUnit.SECONDS);
+            completedCommandsTask = new PostCompletedCommandsTask(platform);
+            commandExecutor = new QueuedCommandExecutor(platform, completedCommandsTask);
+            scheduledTasks.add(ForgeScheduledTask.Builder.create().withInterval(1).withDelay(1).withTask((Runnable) commandExecutor).build());
+            scheduledTasks.add(ForgeScheduledTask.Builder.create().withAsync(true).withInterval(20).withDelay(20).withTask(completedCommandsTask).build());
+            playerJoinCheckTask = new PlayerJoinCheckTask(platform);
+            scheduledTasks.add(ForgeScheduledTask.Builder.create().withInterval(20).withDelay(20).withTask(playerJoinCheckTask).build());
 
-                if (serverInformation != null) {
-                    scheduledTasks.add(ForgeScheduledTask.Builder.create()/*server.isServerInOnlineMode()*/
-                            .withAsync(true)
-                            .withInterval(20 * 60 * 60 * 24)
-                            .withTask(() -> {
-                                try {
-                                    AnalyticsSend.postServerInformation(httpClient, configuration.getServerKey(), platform, server.usesAuthentication());
-                                } catch (IOException e) {
-                                    getLogger().warn("Can't send analytics", e);
-                                }
-                            })
-                            .build());
-                }
+            if (serverInformation != null) {
+                scheduledTasks.add(ForgeScheduledTask.Builder.create()/*server.isServerInOnlineMode()*/
+                        .withAsync(true)
+                        .withInterval(20 * 60 * 60 * 24)
+                        .withTask(() -> {
+                            try {
+                                AnalyticsSend.postServerInformation(httpClient, configuration.getServerKey(), platform, server.usesAuthentication());
+                            } catch (IOException e) {
+                                getLogger().warn("Can't send analytics", e);
+                            }
+                        })
+                        .build());
+            }
         }
     }
 
@@ -352,17 +337,25 @@ public class TebexForged {
         return commandExecutor;
     }
 
+    public PostCompletedCommandsTask getCompletedCommandsTask() {
+        return completedCommandsTask;
+    }
+
     /*
     public BuycraftI18n getI18n() {
         return i18n;
     }
      */
 
-    public PostCompletedCommandsTask getCompletedCommandsTask() {
-        return completedCommandsTask;
-    }
-
     public PlayerJoinCheckTask getPlayerJoinCheckTask() {
         return playerJoinCheckTask;
+    }
+
+    public static class Debug implements Predicate<RunnableScheduledFuture<?>> {
+
+        @Override
+        public boolean test(RunnableScheduledFuture<?> runnableScheduledFuture) {
+            return !runnableScheduledFuture.isPeriodic();
+        }
     }
 }
